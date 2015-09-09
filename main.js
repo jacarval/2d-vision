@@ -3,6 +3,7 @@ var ctx = canvas.getContext('2d');
 
 var point = new Point(canvas.width / 2, canvas.height / 2, ctx);
 var ray = new Line(point, ctx);
+var poly = new Polygon(100, 100, 75, 4, 'red', ctx); 
 
 document.addEventListener('mousemove', function (e){
     // grab x and y of the client
@@ -20,9 +21,11 @@ document.addEventListener('mousemove', function (e){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     point.draw();
     ray.drawLineFromAngle(angleInDegrees);
+    poly.draw();
 
 
 });
 
 
 point.draw();
+poly.draw();
