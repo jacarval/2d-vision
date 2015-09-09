@@ -37,8 +37,18 @@ function Point(x, y, ctx) {
 	}
 }
 
-function Line(point, vector) {
-	this.point = point;
-	this.vector = vector;
+function Line(startPoint, ctx) {
+	this.startPoint = startPoint;
+	this.ctx = ctx;
+	this.drawLineFromAngle = function(angle) {
+		// equation to get line end from an angle
+		var x2 = this.startPoint.x + canvas.width * Math.cos(angle * Math.PI/180.0);
+		var y2 = this.startPoint.y + canvas.height * Math.sin(angle * Math.PI/180.0);
+		this.ctx.beginPath();
+		this.ctx.moveTo(this.startPoint.x, this.startPoint.y);
+		this.ctx.lineTo(x2, y2);
+		this.ctx.closePath();
+		this.ctx.stroke();
+	};
 }
 
