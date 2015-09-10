@@ -33,16 +33,23 @@ document.addEventListener('mousemove', function (e){
     segment.draw(ctx)
     ray.drawLineFromAngle(angleInDegrees, ctx);
 
-    // poly.draw(ctx);
+    poly.draw(ctx);
 
     // poly.segments.forEach(function(segment) {
     //     var intersection = getIntersection(ray, segment);
-    //     if (intersection) {
-    //         // console.log(intersection);
+    //     if (intersection){
+    //         console.log(intersection);
+    //          var x = Math.pow((intersection.x-ray.origin.x),2);
+    //          var y = Math.pow((intersection.y-ray.origin.y),2);
+    //          var newMagnitude = Math.sqrt(x+y);
+    //          ray.magnitude = new Point(newMagnitude,newMagnitude);
+    //     }
+    //     else {
+    //         ray.magnitude = new Point(450,450);
     //     }
     // });
 
-    var intersection = getIntersection(ray, segment);
+    var intersection = getIntersection(ray, poly.segments[0]);
     if (intersection){
          var x = Math.pow((intersection.x-ray.origin.x),2);
          var y = Math.pow((intersection.y-ray.origin.y),2);
@@ -91,4 +98,4 @@ function getIntersection(ray, segment){
 
 point.draw(ctx);
 segment.draw(ctx);
-// poly.draw(ctx);
+poly.draw(ctx);
