@@ -43,6 +43,15 @@ document.addEventListener('mousemove', function (e){
     // });
 
     var intersection = getIntersection(ray, segment);
+    if (intersection){
+         var x = Math.pow((intersection.x-ray.origin.x),2);
+         var y = Math.pow((intersection.y-ray.origin.y),2);
+         var newMagnitude = Math.sqrt(x+y);
+         ray.magnitude = new Point(newMagnitude,newMagnitude);
+    }
+    else {
+        ray.magnitude = new Point(450,450);
+    }
     console.log('intersection: ', intersection);
 
     document.getElementById('x').innerText = 'x: ' + x;
