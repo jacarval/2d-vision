@@ -7,19 +7,41 @@ function Polygon(x, y, radius, sides, color) {
 	this.radius = radius;
 	this.sides = sides;
 	this.color = color;
-	this.corners = (function () {
+	this.corners= [];
+	this.segments = (function () {
 
+		var segments = [];
 		var corners = [];
 		var a = (Math.PI * 2)/self.sides;
 
-		for (var i = 0; i < self.sides; i++) {
-			var x = self.radius * Math.cos(a * i);
-			var y = self.radius * Math.sin(a * i);
+		var x = self.radius * Math.cos(a * 0);
+		var y = self.radius * Math.sin(a * 0);
+		corners.push([x,y]);
+		for (var i = 1; i < self.sides; i++) {
+			var x1 = corners[i-1][0]; 
+			var y1 = corners[i-1][1];
+			var startPoint = new Point(x1,y1);
 
-			corners.push([x, y]);
-		}	
+			var x2 = self.radius * Math.cos(a*i);
+			var y2 = self.radius * Math.sin(a*i)
+			var endPoint = new Point(x2,y2);
 
-		return corners;
+			segments.push(new Segment(startPoint, endPoint));
+			corners.push([x2,y2]);
+		}
+		var x1 = corners[corners.length-1][0]; 
+		var y1 = corners[corners.length-1][1];
+		var startPoint = new Point(x1,y1);
+
+		var x2 = corners[0][0];
+		var y2 = corners[0][1];
+		var endPoint = new Point(x2,y2);
+
+		segments.push(new Segment(startPoint, endPoint));
+
+		// corners.push(corners[corners.length-1][0], corners[corners.length-1][1]);
+		self.corners = corners;
+		return segments;
 		
 	}());
 
@@ -40,6 +62,8 @@ function Polygon(x, y, radius, sides, color) {
 			ctx.lineTo(x, y);
 		}	
 
+
+
 		ctx.closePath();
 		ctx.stroke();
 		ctx.restore();
@@ -49,23 +73,29 @@ function Polygon(x, y, radius, sides, color) {
 function Point(x, y) {
 	this.x = x;
 	this.y = y;
-	this.shape = new Polygon(x, y, 5, 6, 'red');
+	// this.shape = new Polygon(x, y, 5, 6, 'red');
 	this.draw = function(ctx) {
-		this.shape.draw(ctx);
+		// this.shape.draw(ctx);
 	}
 }
 
-function Line(startPoint) {
-	this.startPoint = startPoint;
+function Ray(origin) {
+	this.origin = origin;
+	this.vector = new Point(canvas.width, canvas.height);
 	this.drawLineFromAngle = function(angle, ctx) {
 		// equation to get line end from an angle
-		var x2 = this.startPoint.x + canvas.width * Math.cos(angle * Math.PI/180.0);
-		var y2 = this.startPoint.y + canvas.height * Math.sin(angle * Math.PI/180.0);
+		this.vector.x = this.origin.x + canvas.width * Math.cos(angle * Math.PI/180.0);
+		this.vector.y = this.origin.y + canvas.height * Math.sin(angle * Math.PI/180.0);
 		ctx.beginPath();
-		ctx.moveTo(this.startPoint.x, this.startPoint.y);
-		ctx.lineTo(x2, y2);
+		ctx.moveTo(this.origin.x, this.origin.y);
+		ctx.lineTo(this.vector.x, this.vector.y);
 		ctx.closePath();
 		ctx.stroke();
 	};
+}
+
+function Segment(startPoint, endPoint){
+	this.startPoint = startPoint;
+	this.endPoint = endPoint;
 }
 
