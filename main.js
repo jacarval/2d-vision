@@ -21,11 +21,11 @@ document.addEventListener('mousemove', function (e){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     point.draw();
     ray.drawLineFromAngle(angleInDegrees);
-    poly.draw();
+    poly.draw(ctx);
 
 
 });
 
 
-point.draw();
-poly.draw();
+point.draw(ctx);
+poly.draw(ctx);
