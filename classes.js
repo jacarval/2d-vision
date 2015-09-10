@@ -77,17 +77,12 @@ function Point(x, y) {
 	this.draw = function(ctx) {
 		// this.shape.draw(ctx);
 	}
-	this.subtract = function(point) {
-		var x = this.x - point.x;
-		var y = this.y - point.y;
-		return new Point(x, y);
-	}
 }
 
 function Ray(origin) {
 	this.origin = origin;
-	this.magnitude = new Point(1000, 1000);
-	this.direction = this.magnitude.subtract(origin);
+	this.direction = new Point(0, 0);
+	this.magnitude = new Point(450, 450);
 	this.drawLineFromAngle = function(angle, ctx) {
 		// equation to get line end from an angle
 		this.direction.x = this.origin.x + this.magnitude.x * Math.cos(angle * Math.PI/180.0);
@@ -103,7 +98,6 @@ function Ray(origin) {
 function Segment(startPoint, endPoint){
 	this.startPoint = startPoint;
 	this.endPoint = endPoint;
-	this.direction = endPoint.subtract(startPoint)
 	this.draw = function(ctx) {
 		ctx.beginPath();
 		ctx.moveTo(startPoint.x, startPoint.y);

@@ -49,24 +49,32 @@ document.addEventListener('mousemove', function (e){
     document.getElementById('y').innerText = 'y: ' + y;
 });
 
-function getIntersection(r, s){
+function getIntersection(ray, segment){
     // T1 and T2 are scalars of the lines being compared
+    var r_px = ray.origin.x;
+    var r_py = ray.origin.y;
+    var r_dx = ray.direction.x-ray.origin.x;
+    var r_dy = ray.direction.y-ray.origin.y;
+
+    var s_px = segment.startPoint.x;
+    var s_py = segment.startPoint.y;
+    var s_dx = segment.endPoint.x-segment.startPoint.x;
+    var s_dy = segment.endPoint.y-segment.startPoint.y;
 
     // When T2 0<T2<1 that means that the point in question is between the startPoint (0)
     // and the endPoint (1)
-    var T2 = (r.direction.x*(s.startPoint.y-r.origin.y)+r.direction.y*(r.origin.x-s.startPoint.x))/
-                (s.direction.x*r.direction.y-s.direction.y*r.direction.x);
+    var T2 = (r_dx*(s_py-r_py)+r_dy*(r_px-s_px))/(s_dx*r_dy-s_dy*r_dx);
 
     // When T1 > 0 that means the segment is in front of the ray
     // When T1 < 0 the scalar is negative and so we're looking at the line behind us
-    var T1 = (s.startPoint.x+s.direction.x*T2-r.origin.x)/r.direction.x;
+    var T1 = (s_px+s_dx*T2-r_px)/r_dx;
 
     document.getElementById('T1').innerText = 'T1: ' + T1;
     document.getElementById('T2').innerText = 'T2: ' + T2;
+
     // Intersections occur when 0<T2<1 and T1 > 0
     if (0 < T2 && T2 < 1 && T1 > 0){
-        alert()
-        return new Point(r.origin.x+(r.direction.x*T1), r.origin.y+(r.direction.y*T1));
+        return new Point(r_px+(r_dx*T1), r_py+(r_dy*T1));
     }
     return null;
 }
