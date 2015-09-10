@@ -28,12 +28,6 @@ document.addEventListener('mousemove', function (e){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-
-    point.draw(ctx);
-
-
-
-
     segment.draw(ctx)
     ray.drawLineFromAngle(angleInDegrees, ctx);
 
@@ -114,7 +108,5 @@ function getIntersection(ray, segment){
     return null;
 }
 
-
-point.draw(ctx);
 segment.draw(ctx);
 poly.draw(ctx);
