@@ -25,7 +25,17 @@ document.addEventListener('mousemove', function (e){
     ray.drawLineFromAngle(angleInDegrees, ctx);
     poly.draw(ctx);
 
+    // poly.segments.forEach(function(segment) {
+    //     var intersection = getIntersection(ray, segment);
+    //     if (intersection) {
+    //         // console.log(intersection);
+    //     }
+    // });
 
+    var intersection = getIntersection(ray, poly.segments[1]);
+    console.log('intersection: ', intersection);
+
+    console.log(x, y);
 });
 
 function getIntersection(r, s){
@@ -33,15 +43,17 @@ function getIntersection(r, s){
 
     // When T2 0<T2<1 that means that the point in question is between the startPoint (0)
     // and the endPoint (1)
-    var T2 = (r.vector.x*(s.startPoint.x-r.origin.y)+r.vector.y*(r.origin.x-s.startPoint.x))/
+    var T2 = (r.vector.x*(s.startPoint.y-r.origin.y)+r.vector.y*(r.origin.x-s.startPoint.x))/
                 (s.endPoint.x*r.vector.y-s.endPoint.y*r.vector.x);
 
     // When T1 > 0 that means the segment is in front of the ray
     // When T1 < 0 the scalar is negative and so we're looking at the line behind us
     var T1 = (s.startPoint.x+s.endPoint.x*T2-r.origin.x)/r.vector.x;
 
+    console.log('T1: ', T1, ' T2: ', T2);
     // Intersections occur when 0<T2<1 and T1 > 0
-    if (0<T2<1 && T1 > 0){
+    if (0 < T2 && T2 < 1 && T1 > 0){
+        alert()
         return new Point(r.origin.x+(r.vector.x*T1),r.origin.y+(r.vector.y*T1));
     }
     return null;
