@@ -77,18 +77,24 @@ function Point(x, y) {
 	this.draw = function(ctx) {
 		// this.shape.draw(ctx);
 	}
+	this.subtract = function(point) {
+		var x = this.x - point.x;
+		var y = this.y - point.y;
+		return new Point(x, y);
+	}
 }
 
 function Ray(origin) {
 	this.origin = origin;
-	this.vector = new Point(canvas.width, canvas.height);
+	this.magnitude = new Point(1000, 1000);
+	this.direction = this.magnitude.subtract(origin);
 	this.drawLineFromAngle = function(angle, ctx) {
 		// equation to get line end from an angle
-		this.vector.x = this.origin.x + canvas.width * Math.cos(angle * Math.PI/180.0);
-		this.vector.y = this.origin.y + canvas.height * Math.sin(angle * Math.PI/180.0);
+		this.direction.x = this.origin.x + this.magnitude.x * Math.cos(angle * Math.PI/180.0);
+		this.direction.y = this.origin.y + this.magnitude.y * Math.sin(angle * Math.PI/180.0);
 		ctx.beginPath();
 		ctx.moveTo(this.origin.x, this.origin.y);
-		ctx.lineTo(this.vector.x, this.vector.y);
+		ctx.lineTo(this.direction.x, this.direction.y);
 		ctx.closePath();
 		ctx.stroke();
 	};
@@ -97,5 +103,13 @@ function Ray(origin) {
 function Segment(startPoint, endPoint){
 	this.startPoint = startPoint;
 	this.endPoint = endPoint;
+	this.direction = endPoint.subtract(startPoint)
+	this.draw = function(ctx) {
+		ctx.beginPath();
+		ctx.moveTo(startPoint.x, startPoint.y);
+    	ctx.lineTo(endPoint.x, endPoint.y);
+    	ctx.closePath();
+    	ctx.stroke();
+	}
 }
 
