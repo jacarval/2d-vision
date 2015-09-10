@@ -7,9 +7,9 @@ function Polygon(x, y, radius, sides, color) {
 	this.radius = radius;
 	this.sides = sides;
 	this.color = color;
-	this.corners = (function (x, y) {
+	this.corners = (function () {
 
-		var corners = [[x, y]];
+		var corners = [];
 		var a = (Math.PI * 2)/self.sides;
 
 		for (var i = 0; i < self.sides; i++) {
@@ -49,9 +49,9 @@ function Polygon(x, y, radius, sides, color) {
 function Point(x, y) {
 	this.x = x;
 	this.y = y;
-	this.shape = new Polygon(x, y, 5, 6, 'red', ctx);
+	this.shape = new Polygon(x, y, 5, 6, 'red');
 	this.draw = function(ctx) {
-		this.shape.draw();
+		this.shape.draw(ctx);
 	}
 }
 
