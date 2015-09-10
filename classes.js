@@ -82,11 +82,11 @@ function Point(x, y) {
 function Ray(origin) {
 	this.origin = origin;
 	this.direction = new Point(0, 0);
-	this.magnitude = new Point(450, 450);
+	this.magnitude = 450;
 	this.drawLineFromAngle = function(angle, ctx) {
 		// equation to get line end from an angle
-		this.direction.x = this.origin.x + this.magnitude.x * Math.cos(angle * Math.PI/180.0);
-		this.direction.y = this.origin.y + this.magnitude.y * Math.sin(angle * Math.PI/180.0);
+		this.direction.x = this.origin.x + this.magnitude * Math.cos(angle * Math.PI/180.0);
+		this.direction.y = this.origin.y + this.magnitude * Math.sin(angle * Math.PI/180.0);
 		ctx.beginPath();
 		ctx.moveTo(this.origin.x, this.origin.y);
 		ctx.lineTo(this.direction.x, this.direction.y);

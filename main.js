@@ -5,9 +5,13 @@ var point = new Point(canvas.width / 2, canvas.height / 2);
 var ray = new Ray(point);
 var poly = new Polygon(100, 100, 75, 4, 'red'); 
 
-var a = new Point(50, 100);
-var b = new Point(100, 50);
+var a = new Point(150, 200);
+var b = new Point(200, 150);
 var segment = new Segment(a, b);
+var globalSegments = []
+
+globalSegments.push(segment);
+globalSegments = globalSegments.concat(poly.segments);
 
 document.addEventListener('mousemove', function (e){
     // grab x and y of the client
@@ -35,31 +39,46 @@ document.addEventListener('mousemove', function (e){
 
     poly.draw(ctx);
 
-    // poly.segments.forEach(function(segment) {
-    //     var intersection = getIntersection(ray, segment);
-    //     if (intersection){
-    //         console.log(intersection);
-    //          var x = Math.pow((intersection.x-ray.origin.x),2);
-    //          var y = Math.pow((intersection.y-ray.origin.y),2);
-    //          var newMagnitude = Math.sqrt(x+y);
-    //          ray.magnitude = new Point(newMagnitude,newMagnitude);
-    //     }
-    //     else {
-    //         ray.magnitude = new Point(450,450);
-    //     }
-    // });
+    var closestIntersection = null;
+    var smallestMagnitude = Infinity
 
-    var intersection = getIntersection(ray, poly.segments[0]);
-    if (intersection){
-         var x = Math.pow((intersection.x-ray.origin.x),2);
-         var y = Math.pow((intersection.y-ray.origin.y),2);
-         var newMagnitude = Math.sqrt(x+y);
-         ray.magnitude = new Point(newMagnitude,newMagnitude);
+    globalSegments.forEach(function(segment) {
+        var intersection = getIntersection(ray, segment);
+        if (intersection){
+            var x = Math.pow((intersection.x-ray.origin.x),2);
+            var y = Math.pow((intersection.y-ray.origin.y),2);
+            var newMagnitude = Math.sqrt(x+y);
+            console.log(newMagnitude)
+
+            if (newMagnitude < smallestMagnitude) {
+                smallestMagnitude = newMagnitude;
+                closestIntersection = intersection;
+
+                console.log(smallestMagnitude, closestIntersection);
+            }
+        }
+    });
+
+    if (closestIntersection) {
+        ray.magnitude = smallestMagnitude;
     }
     else {
-        ray.magnitude = new Point(450,450);
+        ray.magnitude = 450;
     }
-    console.log('intersection: ', intersection);
+
+
+
+    // var intersection = getIntersection(ray, poly.segments[0]);
+    // if (intersection){
+    //      var x = Math.pow((intersection.x-ray.origin.x),2);
+    //      var y = Math.pow((intersection.y-ray.origin.y),2);
+    //      var newMagnitude = Math.sqrt(x+y);
+    //      ray.magnitude = new Point(newMagnitude,newMagnitude);
+    // }
+    // else {
+    //     ray.magnitude = new Point(450,450);
+    // }
+    // console.log('intersection: ', intersection);
 
     document.getElementById('x').innerText = 'x: ' + x;
     document.getElementById('y').innerText = 'y: ' + y;
