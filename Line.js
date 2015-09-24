@@ -6,7 +6,7 @@ function Point(x, y) {
 function Ray(origin) {
 	this.origin = origin;
 	this.direction = new Point(0, 0);
-	this.magnitude = 450;
+	this.magnitude = 0;
 	this.drawLineFromAngle = function(angle, ctx) {
 		// equation to get line end from an angle
 		this.direction.x = this.origin.x + this.magnitude * Math.cos(angle * Math.PI/180.0);
