@@ -23,7 +23,6 @@ function Polygon(x, y, radius, sides, color) {
     this.segments = (function() {
         var _segments = [];
         for (var i = 0; i < self.sides; i++) {
-            console.log(self.corners[i], self.corners[(i + 1) % self.sides])
             _segments.push(new Segment(self.corners[i], self.corners[(i + 1) % self.sides]))
         }
         return _segments;

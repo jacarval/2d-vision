@@ -58,9 +58,6 @@ function getIntersection(ray, segment){
         var T1 = (s_py+s_dy*T2-r_py)/r_dy;
     }
 
-    document.getElementById('T1').innerText = 'T1: ' + T1;
-    document.getElementById('T2').innerText = 'T2: ' + T2;
-
     // Intersections occur when 0<T2<1 and T1 > 0
     if (0 < T2 && T2 < 1 && T1 > 0){
         return {
@@ -174,7 +171,7 @@ document.addEventListener('mousemove', function (e){
             ctx.lineTo(point.x, point.y);
         }
     });
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 1)';
     ctx.fill();
 
     document.getElementById('x').innerText = 'x: ' + mouseX;
